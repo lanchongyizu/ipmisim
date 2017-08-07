@@ -1,0 +1,24 @@
+* INSTALL:
+sudo apt-get install libpopt-dev
+sudo apt-get install libncurses5-dev
+sudo apt-get install libssl-dev
+sudo apt-get install devscripts
+sudo apt-get install fakeroot
+
+sudo make dist
+autoreconf -i
+./configure CFLAGS="-lrt -lpthread" --prefix=/usr/local --with-tcl=no
+make
+sudo make install
+
+* START:
+sudo /usr/local/bin/ipmi_sim -c /etc/ipmi/vbmc.conf -f /etc/ipmi/vbmc.emu -s /var
+
+* BUILD DEBIAN:
+//command (have tried, but couldn't remember which one works :( ):
+debuild --no-lintian --no-tgz-check -us -uc
+dpkg-buildpackage -us -uc
+fakeroot debian/rules build
+fakeroot debian/rules binary
+
+reference: https://www.debian.org/doc/manuals/maint-guide/first.zh-cn.html
