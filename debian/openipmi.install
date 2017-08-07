@@ -1,0 +1,2 @@
+vbmc.conf /etc/ipmi
+vbmc.emu /etc/ipmi

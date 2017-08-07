@@ -1,0 +1,5 @@
+openipmi (0.1-1) UNRELEASED; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- test author <test@test.org>  Fri, 28 Jul 2017 14:07:09 +0800
