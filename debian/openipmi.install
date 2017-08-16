@@ -1,2 +1,3 @@
 vbmc.conf /etc/ipmi
 vbmc.emu /etc/ipmi
+chassiscontrol /etc/ipmi
