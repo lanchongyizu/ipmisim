@@ -8,4 +8,4 @@ Standards-Version: 3.9.4
 Package: ipmisim
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: ipmisim for node simulator
+Description: IPMI Simulator from OpenIPMI
