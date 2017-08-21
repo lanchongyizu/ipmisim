@@ -15,12 +15,12 @@
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="ipmisim"
+DESC="IPMI Simulator"
 NAME=ipmisim
-DAEMON=/usr/bin/ipmisim
+DAEMON=/usr/bin/$NAME
 DAEMON_ARGS="-c /etc/ipmi/vbmc.conf -f /etc/ipmi/vbmc.emu -s /var -n"
 PIDFILE=/var/run/$NAME.pid
-LOGFILE="/var/log/$NAME.log"
+LOGFILE=/var/log/$NAME.log
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
@@ -29,7 +29,6 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Read configuration variable file if it is present
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 
-# Load the VERBOSE setting and other rcS variables
 . /lib/init/vars.sh
 
 # Define LSB log_* functions.
@@ -104,22 +103,33 @@ reload_sim() {
     return 0
 }
 
+start_stop_end() {
+    case $1 in
+        0)
+            # [ -x /sbin/initctl ] && /sbin/initctl emit --no-wait "$NAME-$2"
+            log_end_msg 0
+            ;;
+        1)
+            log_warning_msg "$DESC already $2"
+            log_end_msg 0
+            ;;
+        *)
+            log_warning_msg "FAILED - check $LOGFILE"
+            log_end_msg 1
+            ;;
+    esac
+}
+
 case "$1" in
   start)
-    [ "$VERBOSE" != no ] && log_daemon_msg "Starting $DESC" "$NAME"
+    log_daemon_msg "Starting $DESC" "$NAME"
     start_sim
-    case "$?" in
-        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
-    esac
+    start_stop_end $? "running"
     ;;
   stop)
-    [ "$VERBOSE" != no ] && log_daemon_msg "Stopping $DESC" "$NAME"
+    log_daemon_msg "Stopping $DESC" "$NAME"
     stop_sim
-    case "$?" in
-        0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-        2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
-    esac
+    start_stop_end $? "stopped"
     ;;
   status)
     status_of_proc "$DAEMON" "$NAME" && exit 0 || exit $?

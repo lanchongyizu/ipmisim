@@ -1,11 +1,9 @@
 RPM		= rpmbuild
 RPMFLAGS	= -ta
 
-SUBDIRS    = include utils lib unix $(GLIB_DIR) $(TCL_DIR) libedit cmdlang \
-	     ui lanserv sample doc man $(SWIG_DIR)
+SUBDIRS    = include utils lib unix lanserv
 
-DIST_SUBDIRS = include utils lib unix glib tcl libedit cmdlang \
-	     ui lanserv sample doc man swig
+DIST_SUBDIRS = include utils lib unix lanserv
 
 EXTRA_DIST = FAQ TODO README.Force README.MotorolaMXP OpenIPMI.spec.in \
 	     OpenIPMI.spec ipmi.init ipmi.sysconf COPYING.BSD \
