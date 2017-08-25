@@ -751,8 +751,13 @@ emu_printf(emu_out_t *out, char *format, ...)
 }
 
 static void
-dummy_printf(emu_out_t *out, char *format, ...)
+normal_printf(emu_out_t *out, char *format, ...)
 {
+    va_list ap;
+
+    va_start(ap, format);
+    vprintf(format, ap);
+    va_end(ap);
 }
 
 #define TN_IAC  255
@@ -1463,7 +1468,7 @@ main(int argc, const char *argv[])
     stdio_console.telnet = 0;
     stdio_console.tn_pos = 0;
     if (nostdio) {
-	stdio_console.out.printf = dummy_printf;
+	stdio_console.out.printf = normal_printf;
 	stdio_console.out.data = &stdio_console;
     } else {
 	stdio_console.out.printf = emu_printf;
